@@ -12,6 +12,7 @@ export default [
       "@typescript-eslint/no-explicit-any": "off", // Disable the rule for 'any' type
       "@typescript-eslint/no-empty-interface": "off", // Disable the empty interface rule
       "@typescript-eslint/no-empty-object-type": "off", // Disable the empty object type rule
+      "@typescript-eslint/no-require-imports": "off", // Disable the empty object type rule
     },
   },
 ];
