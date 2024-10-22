@@ -6,31 +6,23 @@ import {
 import { DefaultTheme } from "@/providers/theme-provider";
 import { useTheme } from "@/providers/use-theme";
 import { StyleSheet } from "react-native";
+import { responsiveHeight, responsiveWidth } from "./responsive";
 
 const defaultTheme = {};
 
 /**
- * Creates a styled component with support for variants and slots.
+ * Function to create styles for components, with support for theming and responsive design.
  *
- * This function allows you to define styles for components with an option to specify
- * variants and slots. It also supports a theming mechanism via a theme provider.
+ * @template V - Type of variant styles.
+ * @template S - Type of the resulting style object.
  *
- * @template V - A record of variant styles where each key represents a variant and
- *               maps to its respective styles.
- * @template S - A record of slot styles where each key represents a slot and maps
- *               to its respective styles.
+ * @param {NVOptions<V, S> | ((theme: DefaultTheme, wp: typeof responsiveWidth, hp: typeof responsiveHeight) => NVOptions<V, S>)} options - An object that defines base styles, variant styles, and default variants for the component or a function that returns such an object based on the current theme.
  *
- * @param {NVOptions<V, S> | ((theme: DefaultTheme) => NVOptions<V, S>)} options -
- *        An object that defines the styles, variants, and slots for the component,
- *        or a function that returns such an object based on the current theme.
- *
- * @returns {(props: Partial<NVDefaultVariantProps<V>>) => S} A function that takes
- *          an object of variant properties and returns the corresponding styles
- *          for the component, including any base styles, variant styles, or
- *          styles defined in the slots.
+ * @returns {(props: Partial<VariantProps<V>>) => S} A function that takes partial variant properties and returns a style object.
  *
  * @example
- * const tabs = av({
+ * // Without Theme:
+ * const tabsWithoutTheme = nv((wp, hp) => ({
  *   slots: {
  *     tabs_list: {
  *       display: "flex",
@@ -38,11 +30,11 @@ const defaultTheme = {};
  *       flexDirection: "row",
  *       justifyContent: "space-between",
  *       gap: 2,
- *       marginBottom: 4,
+ *       marginBottom: hp(4),
  *     },
  *     tab: {
- *       paddingHorizontal: 20,
- *       paddingVertical: 6,
+ *       paddingHorizontal: wp(20),
+ *       paddingVertical: hp(6),
  *       fontSize: 13,
  *       display: "flex",
  *       flexDirection: "row",
@@ -52,27 +44,118 @@ const defaultTheme = {};
  *       gap: 2,
  *     },
  *     panel: {
- *       paddingVertical: 14,
+ *       paddingVertical: hp(14),
  *       display: "flex",
  *       flexDirection: "column",
  *       width: "100%",
  *       height: "auto",
  *     },
  *   },
+ * }));
+ *
+ * @example
+ * // With Theme:
+ * const tabsWithTheme = nv((theme, wp, hp) => ({
+ *   slots: {
+ *     tabs_list: {
+ *       display: "flex",
+ *       width: "100%",
+ *       flexDirection: "row",
+ *       justifyContent: "space-between",
+ *       gap: 2,
+ *       marginBottom: hp(4),
+ *       backgroundColor: theme.colors.primary, // Example usage of theme
+ *     },
+ *     tab: {
+ *       paddingHorizontal: wp(20),
+ *       paddingVertical: hp(6),
+ *       fontSize: 13,
+ *       display: "flex",
+ *       flexDirection: "row",
+ *       textAlign: "center",
+ *       justifyContent: "center",
+ *       alignItems: "center",
+ *       gap: 2,
+ *     },
+ *     panel: {
+ *       paddingVertical: hp(14),
+ *       display: "flex",
+ *       flexDirection: "column",
+ *       width: "100%",
+ *       height: "auto",
+ *     },
+ *   },
+ * }));
+ *
+ * @example
+ * // Creating avatar variants with base styles and size variants
+ * const avatarVariants = av({
+ *   base: {
+ *     position: "relative",
+ *     display: "flex",
+ *     justifyContent: "center",
+ *     alignItems: "center",
+ *     flexDirection: "column",
+ *     borderRadius: 50,
+ *     overflow: "hidden",
+ *   },
+ *   variants: {
+ *     size: {
+ *       default: {
+ *         width: 50,
+ *         height: 50,
+ *       },
+ *       xl: {
+ *         width: 100,
+ *         height: 100,
+ *       },
+ *       lg: {
+ *         width: 70,
+ *         height: 70,
+ *       },
+ *       sm: {
+ *         width: 40,
+ *         height: 40,
+ *       },
+ *     },
+ *   },
+ *   defaultVariants: {
+ *     size: "default",
+ *   },
  * });
  *
- * const { tabs_list, tab, panel } = tabs({});
+ * // Using avatarVariants to get styles for a specific size
+ * const styles = avatarVariants({ size: "lg" });
  */
 export function nv<
   V extends Record<string, Record<string, StyleProps>>,
   S extends Record<string, StyleProps>,
->(options: NVOptions<V, S> | ((theme: DefaultTheme) => NVOptions<V, S>)) {
+>(
+  options: Partial<
+    | NVOptions<V, S>
+    | ((
+        theme: DefaultTheme,
+        wp: typeof responsiveWidth,
+        hp: typeof responsiveHeight,
+      ) => NVOptions<V, S>)
+  >,
+) {
   return (props: Partial<NVDefaultVariantProps<V>>): S => {
-    let theme;
+    let theme: DefaultTheme | undefined;
+
     if (typeof options === "function") {
-      theme = useTheme();
-      options = options(theme as DefaultTheme);
+      const result =
+        options.length === 3
+          ? options(
+              useTheme() as DefaultTheme,
+              responsiveWidth,
+              responsiveHeight,
+            )
+          : options(responsiveWidth, responsiveHeight);
+
+      options = result;
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       theme = defaultTheme;
     }
 

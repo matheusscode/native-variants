@@ -1,3 +1,4 @@
 export * from "@/interfaces/lib";
 export * from "@/providers";
-export * from "@/utils";
+export { alpha, type AlphaValue } from "@/utils/alpha";
+export { nv } from "@/utils/nv";
