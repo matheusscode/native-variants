@@ -9,7 +9,7 @@
   ],
   "packageManager": "pnpm@9.12.1",
   "scripts": {
-    "build": "swc src -d dist --copy-files --strip-leading-paths --delete-dir-on-start --ignore */.{spec,test}.ts && tsc && tsc-alias --project tsconfig.build.json",
+    "build": "swc packages -d dist --copy-files --strip-leading-paths --delete-dir-on-start --ignore */.{spec,test}.ts && tsc && tsc-alias --project tsconfig.build.json",
     "lint": "eslint .",
     "prepare": "npm run build",
     "post": "npm version patch && npm publish"

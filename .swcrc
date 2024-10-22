@@ -14,7 +14,7 @@
     },
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./packages/*"]
     },
     "target": "es2020",
     "loose": false,

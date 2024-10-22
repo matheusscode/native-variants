@@ -11,7 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["packages/*"]
     },
     "outDir": "dist",
     "declaration": true,
@@ -21,6 +21,6 @@
   "tsc-alias": {
     "resolveFullPaths": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["packages/**/*.ts", "packages/**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }
