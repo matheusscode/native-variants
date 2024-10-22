@@ -1,0 +1,49 @@
+{
+  "name": "native-variants",
+  "version": "0.1.0",
+  "description": "A library for handling variants in React Native components with theme support.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "packageManager": "pnpm@9.12.1",
+  "scripts": {
+    "build": "swc src -d dist --copy-files --strip-leading-paths --delete-dir-on-start --ignore */.{spec,test}.ts && tsc && tsc-alias --project tsconfig.build.json",
+    "lint": "eslint .",
+    "prepare": "npm run build",
+    "post": "npm version patch && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheusscode/native-variants.git"
+  },
+  "homepage": "https://github.com/matheusscode/native-variants#readme",
+  "issues": "https://github.com/matheusscode/native-variants/issues",
+  "keywords": [
+    "theme",
+    "variants",
+    "style-sheet",
+    "react-native"
+  ],
+  "author": "matheusscode",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@swc/cli": "0.4.1-nightly.20240914",
+    "@swc/core": "^1.7.36",
+    "@types/react": "^18.3.11",
+    "@types/react-native": "^0.73.0",
+    "eslint": "9.12.0",
+    "globals": "^15.11.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.10.0"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-native": "^0.75.4"
+  }
+}
