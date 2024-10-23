@@ -1,12 +1,12 @@
+import { DefaultTheme } from "@/providers/theme-provider";
+import { useTheme } from "@/providers/use-theme";
+import { StyleSheet } from "react-native";
+import { responsiveHeight, responsiveWidth } from "../utils/responsive";
 import {
   type NVDefaultVariantProps,
   type NVOptions,
   type StyleProps,
-} from "@/interfaces/lib";
-import { DefaultTheme } from "@/providers/theme-provider";
-import { useTheme } from "@/providers/use-theme";
-import { StyleSheet } from "react-native";
-import { responsiveHeight, responsiveWidth } from "./responsive";
+} from "./_lib";
 
 const defaultTheme = {};
 
