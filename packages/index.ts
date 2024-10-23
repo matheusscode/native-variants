@@ -1,5 +1,6 @@
-export * from "@/functions";
-export * from "@/interfaces/lib";
+export * from "@/functions/slots";
+export * from "@/functions/unique";
+export type * from "@/interfaces/lib";
 export * from "@/providers";
 export * from "@/tokens/token.colors";
 export {
