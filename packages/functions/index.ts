@@ -1,2 +1,4 @@
-export {slots} from "./slots";
-export { unique } from "./unique";
+import { slots } from "./slots";
+import { unique } from "./unique";
+
+export { slots, unique };
