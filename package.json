@@ -1,6 +1,6 @@
 {
   "name": "native-variants",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A library for handling variants in React Native components with theme support.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
     "build": "swc packages -d dist --copy-files --strip-leading-paths --delete-dir-on-start --ignore */.{spec,test}.ts && tsc && tsc-alias --project tsconfig.build.json",
     "lint": "eslint .",
     "deploy": "npm version patch && npm publish"
-  },  
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/matheusscode/native-variants.git"
