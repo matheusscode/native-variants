@@ -73,8 +73,8 @@ export function slots<
     const instances = Object.fromEntries(
       Object.entries(definitions).map(([key, options]) => [
         key,
-        unique(options),
-      ]),
+        unique(options) as any,
+      ]) as any,
     ) as unknown as {
       [K in keyof V]: (
         props: Partial<
@@ -101,7 +101,7 @@ export function slots<
       Object.entries(instances).map(([key, instance]) => {
         const mergedProps = { ...defaultVariants[key], ...props[key] };
         return [key, instance(mergedProps)];
-      }),
+      }) as any,
     ) as {
       [K in keyof V]: (
         props: Partial<
