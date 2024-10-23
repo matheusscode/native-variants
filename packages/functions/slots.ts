@@ -95,7 +95,7 @@ export function slots<
       [K in keyof V]: {
         [VariantKey in keyof V[K]["variants"]]: keyof V[K]["variants"][VariantKey];
       };
-    };
+    } as any;
 
     return Object.fromEntries(
       Object.entries(instances).map(([key, instance]) => {
@@ -111,6 +111,6 @@ export function slots<
           >
         >,
       ) => Record<string, StyleProps>;
-    };
+    } as any;
   };
 }
